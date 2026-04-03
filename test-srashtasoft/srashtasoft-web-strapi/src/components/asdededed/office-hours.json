@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_asdededed_office_hours",
+  "info": {
+    "displayName": "Office Hours",
+    "icon": "adjust",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "days": {
+      "type": "string",
+      "required": true
+    },
+    "time": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "category": "asdededed"
+}

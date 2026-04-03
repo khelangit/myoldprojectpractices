@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "company_highlights",
+  "info": {
+    "singularName": "company-highlight",
+    "pluralName": "company-highlights",
+    "displayName": "Company Highlight",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "year_of_experience": {
+      "type": "string",
+      "required": true
+    },
+    "clients": {
+      "type": "string",
+      "required": true
+    },
+    "projects": {
+      "type": "string",
+      "required": true
+    },
+    "team_members": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

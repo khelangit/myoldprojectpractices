@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "life_at_companies",
+  "info": {
+    "name": "life-at-company",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "festival": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "bannerImg": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "Decription": {
+      "type": "text"
+    }
+  }
+}

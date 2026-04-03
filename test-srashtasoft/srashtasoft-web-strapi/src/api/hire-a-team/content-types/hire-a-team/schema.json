@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hire_a_team_s",
+  "info": {
+    "singularName": "hire-a-team",
+    "pluralName": "hire-a-teams",
+    "displayName": "Hire A Team",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "hire_a_team_section": {
+      "type": "component",
+      "repeatable": true,
+      "component": "hire-a-team-section.hire-a-team-section"
+    },
+    "need_help_heading": {
+      "type": "string"
+    },
+    "need_help_sub_heading": {
+      "type": "string"
+    },
+    "need_help_sections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "need-help-sections.need-help-sections"
+    }
+  }
+}

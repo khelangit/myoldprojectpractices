@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recent_works",
+  "info": {
+    "singularName": "recent-work",
+    "pluralName": "recent-works",
+    "displayName": "Recent Works",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "text",
+      "required": true
+    },
+    "client_words": {
+      "type": "text"
+    },
+    "client_name": {
+      "type": "string",
+      "required": true
+    },
+    "client_role": {
+      "type": "string",
+      "required": true
+    },
+    "client_img": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "required": true
+    },
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ],
+      "required": true
+    },
+    "link": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

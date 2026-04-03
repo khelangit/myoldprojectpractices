@@ -1,0 +1,40 @@
+{
+  "name": "srashtasoft-backend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "slugify": "^1.5.3",
+    "strapi": "3.6.3",
+    "strapi-admin": "3.6.3",
+    "strapi-connector-mongoose": "3.6.3",
+    "strapi-plugin-content-manager": "3.6.3",
+    "strapi-plugin-content-type-builder": "3.6.3",
+    "strapi-plugin-documentation": "3.6.3",
+    "strapi-plugin-email": "3.6.3",
+    "strapi-plugin-graphql": "3.6.3",
+    "strapi-plugin-i18n": "3.6.3",
+    "strapi-plugin-upload": "3.6.3",
+    "strapi-plugin-users-permissions": "3.6.3",
+    "strapi-utils": "3.6.3"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "92e542d0-71fa-4c6c-a578-6faf7f3f1f2b"
+  },
+  "engines": {
+    "node": "18.x",
+    "npm": "^9.0.0"
+  },
+  "license": "MIT"
+}

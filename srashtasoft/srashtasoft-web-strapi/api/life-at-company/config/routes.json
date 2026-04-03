@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/life-at-companies",
+      "handler": "life-at-company.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/life-at-companies/count",
+      "handler": "life-at-company.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/life-at-companies/:id",
+      "handler": "life-at-company.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/life-at-companies",
+      "handler": "life-at-company.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/life-at-companies/:id",
+      "handler": "life-at-company.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/life-at-companies/:id",
+      "handler": "life-at-company.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

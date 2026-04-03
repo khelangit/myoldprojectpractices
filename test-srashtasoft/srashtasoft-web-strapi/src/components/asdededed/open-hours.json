@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_asdededed_open_hours",
+  "info": {
+    "displayName": "Open Hours",
+    "icon": "address-card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "num": {
+      "type": "string"
+    }
+  },
+  "category": "asdededed"
+}

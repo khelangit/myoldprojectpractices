@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_solutions_we_offered_about22paragrapgs",
+  "info": {
+    "name": "about22paragrapg",
+    "icon": "ambulance"
+  },
+  "options": {},
+  "attributes": {
+    "aboutparagraph": {
+      "type": "string"
+    }
+  }
+}

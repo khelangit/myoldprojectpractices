@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_solutions_we_offered_programmers_can_help_repeters",
+  "info": {
+    "name": "Programmers_can_help_repeter",
+    "icon": "award",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "about16paragrapg": {
+      "type": "string"
+    }
+  }
+}

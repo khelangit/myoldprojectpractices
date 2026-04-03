@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_hire_a_team_section_hire_a_team_sections",
+  "info": {
+    "name": "hire_a_team_section",
+    "icon": "angle-double-up"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Decription": {
+      "type": "string"
+    }
+  }
+}

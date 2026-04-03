@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"festival":{"$numberInt":"1"}},"name":"festival_1","background":true,"unique":true}],"uuid":"bdcd8e68662346a48a1fb6cae65ff0a4","collectionName":"life_at_companies","type":"collection"}

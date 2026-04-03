@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "heropage_sliders",
+  "info": {
+    "name": "heropage-slider"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "text",
+      "required": true
+    },
+    "subtitle1": {
+      "type": "text"
+    },
+    "subtitle2": {
+      "type": "text"
+    },
+    "img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    }
+  }
+}

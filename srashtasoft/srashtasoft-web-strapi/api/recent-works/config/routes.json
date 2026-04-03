@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/recent-works",
+      "handler": "recent-works.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/recent-works/count",
+      "handler": "recent-works.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/recent-works/:id",
+      "handler": "recent-works.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/recent-works",
+      "handler": "recent-works.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/recent-works/:id",
+      "handler": "recent-works.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/recent-works/:id",
+      "handler": "recent-works.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

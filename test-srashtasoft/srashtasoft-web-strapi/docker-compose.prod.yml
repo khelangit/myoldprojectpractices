@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  strapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: strapi-dev
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - gatsby-strapi-network
+    env_file:
+      - .env.development
+    command: sh -c "npm install --legacy-peer-deps && npm run develop"
+    environment:
+      - NODE_ENV=development
+      - STRAPI_DISABLE_CONTENT_TYPE_BUILDER=false
+
+networks:
+  gatsby-strapi-network:
+    driver: bridge

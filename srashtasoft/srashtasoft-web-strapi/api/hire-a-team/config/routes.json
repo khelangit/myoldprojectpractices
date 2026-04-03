@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/hire-a-teams",
+      "handler": "hire-a-team.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/hire-a-teams/count",
+      "handler": "hire-a-team.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/hire-a-teams/:id",
+      "handler": "hire-a-team.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/hire-a-teams",
+      "handler": "hire-a-team.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/hire-a-teams/:id",
+      "handler": "hire-a-team.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/hire-a-teams/:id",
+      "handler": "hire-a-team.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_histories",
+  "info": {
+    "name": "company-history"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

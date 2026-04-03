@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_solutions_we_offered_solutions_we_offereds",
+  "info": {
+    "name": "solutions_we_offered",
+    "icon": "wrench",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    }
+  }
+}

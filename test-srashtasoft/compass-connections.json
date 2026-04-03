@@ -1,0 +1,26 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "48ee0bf8-7cb9-4a98-8eb1-5e3951ebefe4",
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1751515640544"
+        }
+      },
+      "favorite": {
+        "name": "srashtasoft_web"
+      },
+      "savedConnectionType": "recent",
+      "connectionOptions": {
+        "connectionString": "mongodb://localhost:27017/",
+        "oidc": {
+          "serializedState": "eyJvaWRjUGx1Z2luU3RhdGVWZXJzaW9uIjowLCJzdGF0ZSI6W119"
+        }
+      }
+    }
+  ]
+}

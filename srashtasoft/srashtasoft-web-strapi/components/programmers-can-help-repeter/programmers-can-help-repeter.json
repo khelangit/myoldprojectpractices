@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_programmers_can_help_repeter_programmers_can_help_repeters",
+  "info": {
+    "name": "Programmers_can_help_repeter",
+    "icon": "arrow-alt-circle-left"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

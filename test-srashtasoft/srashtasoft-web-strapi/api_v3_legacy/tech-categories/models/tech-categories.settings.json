@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tech_categories",
+  "info": {
+    "name": "tech-categories",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slugname": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/heropage-sliders",
+      "handler": "heropage-slider.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/heropage-sliders/count",
+      "handler": "heropage-slider.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/heropage-sliders/:id",
+      "handler": "heropage-slider.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/heropage-sliders",
+      "handler": "heropage-slider.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/heropage-sliders/:id",
+      "handler": "heropage-slider.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/heropage-sliders/:id",
+      "handler": "heropage-slider.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

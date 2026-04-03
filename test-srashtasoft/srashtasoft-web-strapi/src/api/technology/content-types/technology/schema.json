@@ -1,0 +1,90 @@
+{
+  "kind": "collectionType",
+  "collectionName": "technologies",
+  "info": {
+    "singularName": "technology",
+    "pluralName": "technologies",
+    "displayName": "Technologies",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "tech_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::tech-category.tech-category"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "solutions_we_offered": {
+      "type": "component",
+      "repeatable": true,
+      "component": "solutions-we-offered.solutions-we-offered"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "required": false
+    },
+    "sub_title": {
+      "type": "string",
+      "required": false
+    },
+    "Dedicted_Developer_Section_Title": {
+      "type": "string",
+      "required": false
+    },
+    "Dedicted_Developer_section_subtitle": {
+      "type": "string",
+      "required": false
+    },
+    "Dedicted_Developer_section_subtitle_1": {
+      "type": "string",
+      "required": false
+    },
+    "Dedicted_Developer_section_subtitle_2": {
+      "type": "string",
+      "required": false
+    },
+    "Programmers_can_help_section": {
+      "type": "string"
+    },
+    "Why_choose_srashtasoft_Title": {
+      "type": "string"
+    },
+    "Why_choose_srashtasoft_subtitle": {
+      "type": "string"
+    },
+    "Need_help_section_title": {
+      "type": "string"
+    },
+    "Programmer_can_help_repeter": {
+      "type": "component",
+      "repeatable": true,
+      "component": "programmers-can-help-repeter.programmers-can-help-repeter"
+    },
+    "Programmer_can_heading": {
+      "type": "string"
+    }
+  }
+}

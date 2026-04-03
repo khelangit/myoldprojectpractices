@@ -1,0 +1,316 @@
+<?php
+/*
+Plugin Name: AI Featured Image Generator
+Description: Generate AI images from post editor and auto-assign as featured image. Supports OpenAI and Automatic1111 SD.
+Version: 1.0
+Author: mk
+*/
+
+if (!defined('ABSPATH')) exit;
+
+define('AFIG_VER','1.0');
+define('AFIG_DIR', plugin_dir_path(__FILE__));
+define('AFIG_URL', plugin_dir_url(__FILE__));
+
+/* Activation - set defaults */
+register_activation_hook(__FILE__, function(){
+    $defaults = array(
+        'provider' => 'openai', // openai | automatic1111
+        'openai_key' => '',
+        'sd_url' => '', // e.g. http://127.0.0.1:7860/sdapi/v1/txt2img
+        'sd_api_key' => '',
+        'default_size' => '1024x1024',
+        'resize_to' => '', // e.g. 1200x630 or empty
+        'quality' => 90,
+        'auto_assign' => 1,
+        'save_to_library' => 1,
+    );
+    if (get_option('afig_settings') === false) update_option('afig_settings', $defaults);
+});
+
+/* Admin menu: Settings page */
+add_action('admin_menu', function(){
+    add_options_page('AI Featured Image','AI Featured Image','manage_options','afig-settings','afig_settings_page');
+});
+
+add_action('admin_init', function(){
+    register_setting('afig_settings_group', 'afig_settings', 'afig_sanitize_settings');
+});
+
+function afig_sanitize_settings($in){
+    $out = array();
+    $out['provider'] = in_array($in['provider'], ['openai','automatic1111']) ? $in['provider'] : 'openai';
+    $out['openai_key'] = sanitize_text_field($in['openai_key']);
+    $out['sd_url'] = esc_url_raw($in['sd_url']);
+    $out['sd_api_key'] = sanitize_text_field($in['sd_api_key']);
+    $out['default_size'] = sanitize_text_field($in['default_size']);
+    $out['resize_to'] = sanitize_text_field($in['resize_to']);
+    $out['quality'] = intval($in['quality']);
+    $out['auto_assign'] = !empty($in['auto_assign']) ? 1 : 0;
+    $out['save_to_library'] = !empty($in['save_to_library']) ? 1 : 0;
+    return $out;
+}
+
+function afig_settings_page(){
+    if (!current_user_can('manage_options')) wp_die('No permission');
+    $s = get_option('afig_settings');
+    ?>
+    <div class="wrap">
+      <h1>AI Featured Image — Settings</h1>
+      <form method="post" action="options.php">
+        <?php settings_fields('afig_settings_group'); $s = wp_parse_args($s, []); ?>
+        <table class="form-table">
+          <tr><th>Provider</th>
+            <td>
+              <select name="afig_settings[provider]">
+                <option value="openai" <?php selected($s['provider'],'openai'); ?>>OpenAI (DALL·E/gpt-image)</option>
+                <option value="automatic1111" <?php selected($s['provider'],'automatic1111'); ?>>Automatic1111 (local SD)</option>
+              </select>
+            </td></tr>
+
+          <tr><th>OpenAI API Key</th>
+            <td><input type="text" name="afig_settings[openai_key]" value="<?php echo esc_attr($s['openai_key'] ?? ''); ?>" style="width:400px"/></td></tr>
+
+          <tr><th>SD API URL (Automatic1111)</th>
+            <td><input type="text" name="afig_settings[sd_url]" value="<?php echo esc_attr($s['sd_url'] ?? ''); ?>" style="width:400px"/>
+            <p class="description">Example: http://127.0.0.1:7860/sdapi/v1/txt2img</p></td></tr>
+
+          <tr><th>SD API Key (if applicable)</th>
+            <td><input type="text" name="afig_settings[sd_api_key]" value="<?php echo esc_attr($s['sd_api_key'] ?? ''); ?>" style="width:400px"/></td></tr>
+
+          <tr><th>Default generation size</th>
+            <td><input type="text" name="afig_settings[default_size]" value="<?php echo esc_attr($s['default_size'] ?? '1024x1024'); ?>"/>
+            <p class="description">Common: 512x512, 768x768, 1024x1024</p></td></tr>
+
+          <tr><th>Optional resize before saving</th>
+            <td><input type="text" name="afig_settings[resize_to]" value="<?php echo esc_attr($s['resize_to'] ?? ''); ?>"/>
+            <p class="description">Example: 1200x630 (leave empty to keep original generation size)</p></td></tr>
+
+          <tr><th>Compression quality (0-100)</th>
+            <td><input type="number" name="afig_settings[quality]" value="<?php echo esc_attr($s['quality'] ?? 90); ?>" min="10" max="100"/></td></tr>
+
+          <tr><th>Auto-assign after generate</th>
+            <td><input type="checkbox" name="afig_settings[auto_assign]" value="1" <?php checked($s['auto_assign'] ?? 1,1); ?> /></td></tr>
+
+          <tr><th>Save to Media Library</th>
+            <td><input type="checkbox" name="afig_settings[save_to_library]" value="1" <?php checked($s['save_to_library'] ?? 1,1); ?> /></td></tr>
+        </table>
+
+        <?php submit_button(); ?>
+      </form>
+      <h2>Notes</h2>
+      <p>Ensure API keys/tokens are kept secret. For Automatic1111, the server must be accessible from your WP host.</p>
+    </div>
+    <?php
+}
+
+/* Add meta box in post editor (shows in Gutenberg sidebar and Classic) */
+add_action('add_meta_boxes', function(){
+    add_meta_box('afig_meta','AI Featured Image','afig_meta_box_callback','post','side','high');
+});
+
+function afig_meta_box_callback($post){
+    wp_nonce_field('afig_nonce','afig_nonce_field');
+    $s = get_option('afig_settings');
+    $default_size = $s['default_size'] ?? '1024x1024';
+    ?>
+    <div id="afig_box">
+      <input type="hidden" id="afig_post_id" value="<?php echo esc_attr($post->ID); ?>"/>
+      <p><label for="afig_prompt">Prompt:</label></p>
+      <textarea id="afig_prompt" style="width:100%" rows="3"></textarea>
+
+      <p><label for="afig_size">Size:</label></p>
+      <select id="afig_size" style="width:100%">
+        <option <?php selected($default_size,'512x512'); ?> value="512x512">512 × 512</option>
+        <option <?php selected($default_size,'768x768'); ?> value="768x768">768 × 768</option>
+        <option <?php selected($default_size,'1024x1024'); ?> value="1024x1024">1024 × 1024</option>
+        <option value="custom">Custom (use settings)</option>
+      </select>
+
+      <p style="margin-top:8px">
+        <button id="afig_generate" class="button button-primary">Generate Featured Image</button>
+        <span id="afig_spinner" style="display:none;margin-left:8px">Generating…</span>
+      </p>
+
+      <div id="afig_status" style="margin-top:8px;color:#555"></div>
+      <div id="afig_preview" style="margin-top:8px"></div>
+    </div>
+    <?php
+}
+
+/* Enqueue admin JS/CSS only on post editor pages */
+add_action('admin_enqueue_scripts', function($hook){
+    if (!in_array($hook, ['post.php','post-new.php'])) return;
+    wp_enqueue_script('afig-admin-js', AFIG_URL . 'admin.js', ['jquery'], AFIG_VER, true);
+    wp_enqueue_style('afig-admin-css', AFIG_URL . 'admin.css', [], AFIG_VER);
+    $settings = get_option('afig_settings');
+    wp_localize_script('afig-admin-js', 'afig_ajax', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('afig_nonce'),
+        'settings' => $settings,
+    ]);
+});
+
+/* AJAX handler: generate image */
+add_action('wp_ajax_afig_generate_image', 'afig_generate_image_callback');
+function afig_generate_image_callback(){
+    check_ajax_referer('afig_nonce','nonce');
+
+    $post_id = intval($_POST['post_id'] ?? 0);
+    if (!$post_id || !current_user_can('edit_post', $post_id)) wp_send_json_error('Permission denied');
+
+    $prompt = wp_strip_all_tags(sanitize_textarea_field($_POST['prompt'] ?? ''));
+    if (empty($prompt)) wp_send_json_error('Prompt is empty');
+
+    $size = sanitize_text_field($_POST['size'] ?? '');
+    $s = get_option('afig_settings');
+    $provider = $s['provider'] ?? 'openai';
+
+    // compute size fallback
+    if ($size === 'custom' || empty($size)) $size = $s['default_size'] ?? '1024x1024';
+    list($w,$h) = array_map('intval', explode('x',$size));
+
+    // cache key to avoid duplicate calls (transient)
+    $cache_key = 'afig_' . md5($provider . '|' . $prompt . '|' . $size);
+    if ($cached = get_transient($cache_key)){
+        // check attachment exists
+        if (isset($cached['attach']) && get_post($cached['attach'])){
+            wp_send_json_success(['attachment_id'=>$cached['attach'], 'url'=>wp_get_attachment_url($cached['attach'])]);
+        }
+    }
+
+    // Call provider
+    $image_data = false;
+    $mime = 'image/png';
+    if ($provider === 'openai'){
+        $api_key = $s['openai_key'] ?? '';
+        if (empty($api_key)) wp_send_json_error('OpenAI key not configured in settings.');
+
+        $body = [
+            "prompt" => $prompt,
+            "n" => 1,
+            "size" => "{$w}x{$h}"
+        ];
+
+        $args = [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $api_key,
+                'Content-Type'  => 'application/json',
+            ],
+            'body' => json_encode($body),
+            'timeout' => 60,
+        ];
+        $resp = wp_remote_post('https://api.openai.com/v1/images/generations', $args);
+        if (is_wp_error($resp)) wp_send_json_error('API request failed: ' . $resp->get_error_message());
+
+        $rb = json_decode(wp_remote_retrieve_body($resp), true);
+        // handle b64 or url
+        if (!empty($rb['data'][0]['b64_json'])){
+            $image_data = base64_decode($rb['data'][0]['b64_json']);
+            $mime = 'image/png';
+        } elseif (!empty($rb['data'][0]['url'])){
+            $file_resp = wp_remote_get($rb['data'][0]['url'], ['timeout'=>60]);
+            if (is_wp_error($file_resp)) wp_send_json_error('Failed to download image.');
+            $image_data = wp_remote_retrieve_body($file_resp);
+            $ct = wp_remote_retrieve_header($file_resp, 'content-type') ?: 'image/png';
+            $mime = $ct;
+        } else {
+            wp_send_json_error('Unexpected response from OpenAI.');
+        }
+    } elseif ($provider === 'automatic1111'){
+        $sd_url = $s['sd_url'] ?? '';
+        if (empty($sd_url)) wp_send_json_error('SD URL not configured.');
+
+        // payload for Automatic1111 /sdapi/v1/txt2img
+        $payload = [
+            'prompt' => $prompt,
+            'width' => $w,
+            'height' => $h,
+            'steps' => 20,
+            'cfg_scale' => 7,
+        ];
+        $args = [
+            'headers' => ['Content-Type' => 'application/json'],
+            'body' => json_encode($payload),
+            'timeout' => 120,
+        ];
+        $resp = wp_remote_post($sd_url, $args);
+        if (is_wp_error($resp)) wp_send_json_error('SD API request failed: ' . $resp->get_error_message());
+        $rb = json_decode(wp_remote_retrieve_body($resp), true);
+        if (!empty($rb['images'][0])){
+            $image_data = base64_decode($rb['images'][0]);
+            $mime = 'image/png';
+        } else {
+            wp_send_json_error('Unexpected SD response.');
+        }
+    } else {
+        wp_send_json_error('Unknown provider.');
+    }
+
+    if (!$image_data) wp_send_json_error('Image data missing.');
+
+    // Save to uploads
+    $upload = wp_upload_bits('ai-image-' . time() . '.png', null, $image_data);
+    if ($upload['error']) wp_send_json_error('Upload error: ' . $upload['error']);
+
+    $file = $upload['file'];
+    $filetype = wp_check_filetype($file, null);
+
+    // Optional resize/compress
+    $resize_to = $s['resize_to'] ?? '';
+    $quality = intval($s['quality'] ?? 90);
+    if (!empty($resize_to) && $editor = wp_get_image_editor($file) && !is_wp_error($editor)){
+        list($rw,$rh) = array_map('intval', explode('x',$resize_to));
+        if ($rw && $rh){
+            $editor->resize($rw, $rh, true);
+        }
+        if (method_exists($editor,'set_quality')) $editor->set_quality($quality);
+        $saved = $editor->save($file);
+        if (!is_wp_error($saved)) {
+            // ok
+        }
+    }
+
+    // Insert attachment
+    $attachment = [
+        'post_mime_type' => $filetype['type'] ?: $mime,
+        'post_title' => sanitize_file_name(basename($file)),
+        'post_content' => '',
+        'post_status' => 'inherit',
+    ];
+
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    require_once(ABSPATH . 'wp-admin/includes/file.php');
+    require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+    $attach_id = wp_insert_attachment($attachment, $file, 0);
+    if (is_wp_error($attach_id) || !$attach_id) wp_send_json_error('Failed to insert attachment.');
+
+    $attach_data = wp_generate_attachment_metadata($attach_id, $file);
+    wp_update_attachment_metadata($attach_id, $attach_data);
+
+    // mark meta for reuse
+    update_post_meta($attach_id, 'afig_generated', 1);
+    update_post_meta($attach_id, 'afig_prompt', $prompt);
+    update_post_meta($attach_id, 'afig_provider', $provider);
+
+    // auto assign?
+    if (!empty($s['auto_assign'])){
+        set_post_thumbnail($post_id, $attach_id);
+    }
+
+    // cache mapping 7 days
+    set_transient($cache_key, ['attach' => $attach_id], DAY_IN_SECONDS * 7);
+
+    wp_send_json_success(['attachment_id' => $attach_id, 'url' => wp_get_attachment_url($attach_id)]);
+}
+
+/* Optional: AJAX to set existing attachment as featured (for library listing) */
+add_action('wp_ajax_afig_set_featured', function(){
+    check_ajax_referer('afig_nonce','nonce');
+    $post_id = intval($_POST['post_id'] ?? 0);
+    $attach = intval($_POST['attach'] ?? 0);
+    if (!$post_id || !$attach || !current_user_can('edit_post',$post_id)) wp_send_json_error('Permission');
+    set_post_thumbnail($post_id, $attach);
+    wp_send_json_success();
+});

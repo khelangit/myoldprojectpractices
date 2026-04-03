@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search-2</title>
+  </head>
+  <body>
+    <h1>Search-2</h1>
+    <div style="position: relative;">
+      <input
+        type="text"
+        id="searchBox2"
+        placeholder="Search..."
+        onkeyup="showSuggestions2(this.value)">
+      <div id="suggestions2" style="position:absolute; top:100%; left:0; right:0;"></div>
+    </div>
+    <script>
+
+        const data = [
+          "Apple iPhone",
+          "Apple Watch",
+          "Banana Shake",
+          "Best Laptops",
+          "Buy Shoes Online",
+          "Coding Tutorials",
+          "JavaScript Guide",
+          "Learn Python",
+          "Latest News",
+          "Samsung Galaxy",
+          "MacBook Pro",
+          "Dell XPS Laptop",
+          "Google Pixel Phone",
+          "Wireless Earbuds",
+          "Noise Cancelling Headphones",
+          "Fitness Tracker",
+          "Digital Marketing Tips",
+          "Online Courses",
+          "ReactJS Tutorial",
+          "VueJS Guide",
+          "Angular Examples",
+          "Healthy Smoothies",
+          "Vegan Recipes",
+          "Top Travel Destinations",
+          "Budget Smartphones",
+          "Smart Home Devices",
+          "Gaming Consoles",
+          "PlayStation 5",
+          "Xbox Series X",
+          "Harry Potter Books",
+          "Science Fiction Novels",
+          "Photography Tips",
+          "Food Delivery App",
+          "Stock Market News",
+          "Crypto Updates",
+          "Electric Vehicles",
+          "Tesla Model 3",
+          "iPad Accessories",
+          "Backpack for Travel",
+          "Running Shoes",
+          "Yoga Mat",
+          "Weight Loss Programs",
+          "Personal Finance Guide",
+          "Freelancing Tips",
+          "Job Interview Prep",
+          "Resume Templates",
+          "Online Shopping Deals",
+          "Discount Coupons",
+          "Home Office Setup",
+          "Laptop Stand",
+          "LED Desk Lamp",
+          "Noise Cancelling Microphone",
+          "Podcasting Tips",
+          "Streaming Setup Guide",
+          "Gaming Mouse",
+          "Mechanical Keyboard",
+          "Bluetooth Speaker",
+          "Smartwatch Apps",
+          "Fitness Challenges",
+          "Workout Routines",
+          "Healthy Breakfast Ideas",
+          "Weight Training Guide",
+          "Meditation Techniques",
+          "Travel Packing List",
+          "City Travel Guide",
+          "Budget Travel Tips",
+          "Car Reviews",
+          "Motorbike Accessories",
+          "Photography Gear",
+          "Camera Lenses",
+          "Drone Reviews",
+          "Video Editing Tips",
+          "Graphic Design Tutorials",
+          "UI/UX Design",
+          "Web Development Projects",
+          "Machine Learning Basics",
+          "Artificial Intelligence",
+          "Data Science Resources",
+          "Excel Formulas",
+          "Power BI Dashboards",
+          "SQL Queries Examples",
+          "Database Design Tips",
+          "Cloud Computing Services",
+          "AWS Certification Guide",
+          "Azure Tutorials",
+          "Google Cloud Platform",
+          "Cybersecurity Tips",
+          "Password Manager Apps",
+          "VPN Reviews",
+          "Online Privacy Tips",
+          "Digital Art Tutorials",
+          "Graphic Design Portfolio",
+        ];
+
+
+      async function showSuggestions2(query) {
+        const suggestionBox = document.getElementById("suggestions2");
+        suggestionBox.innerHTML = "";
+
+        if (query.length === 0) {
+          suggestionBox.style.display = "none";
+          return;
+        }
+
+        const filtered = data.filter(item => item.toLowerCase().includes(query.toLowerCase()));
+
+        if (filtered.length > 0){
+            filtered.forEach(s => {
+               const div = document.createElement("div");
+               div.classList.add("suggestion");
+               div.textContent = s;
+               div.onclick = () => {
+                document.getElementById("searchBox2").value = s;
+                suggestionBox.style.display = "none";
+               };
+               suggestionBox.appendChild(div);
+            });
+            suggestionBox.style.display = "block";
+        } else {
+            suggestionBox.style.display ="none";
+        }
+      }
+    </script>
+  </body>
+</html>

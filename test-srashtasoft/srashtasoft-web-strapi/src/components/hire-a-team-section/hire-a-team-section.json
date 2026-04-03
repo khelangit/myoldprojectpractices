@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_hire_a_team_section_hire_a_team_sections",
+  "info": {
+    "displayName": "Hire A Team Section",
+    "icon": "angle-double-up",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Decription": {
+      "type": "string"
+    }
+  },
+  "category": "hire-a-team-section"
+}

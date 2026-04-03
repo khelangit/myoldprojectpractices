@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_need_help_sections_need_help_sections",
+  "info": {
+    "name": "need_help_sections",
+    "icon": "baby"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Decription": {
+      "type": "string"
+    }
+  }
+}

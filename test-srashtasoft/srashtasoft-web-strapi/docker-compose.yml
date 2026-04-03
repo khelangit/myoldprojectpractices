@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  strapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: strapi-dev-new
+    ports:
+      - "1337:1337"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env.development
+    networks:
+      - gatsby-strapi-network
+    restart: unless-stopped
+
+networks:
+  gatsby-strapi-network:
+    driver: bridge

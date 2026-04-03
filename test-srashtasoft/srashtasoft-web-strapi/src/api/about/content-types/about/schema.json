@@ -1,0 +1,181 @@
+{
+  "kind": "collectionType",
+  "collectionName": "abouts",
+  "info": {
+    "singularName": "about",
+    "pluralName": "abouts",
+    "displayName": "About",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "aboutheading": {
+      "type": "text"
+    },
+    "aboutdecription": {
+      "type": "string"
+    },
+    "ourvisionimage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "visiondecription": {
+      "type": "text"
+    },
+    "visiontitle": {
+      "type": "string"
+    },
+    "missionimage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "misiontitle": {
+      "type": "string"
+    },
+    "misiondecription": {
+      "type": "text"
+    },
+    "tabs16title": {
+      "type": "string"
+    },
+    "tabs16heading": {
+      "type": "string"
+    },
+    "tabs16head": {
+      "type": "string"
+    },
+    "tabs16decription": {
+      "type": "text"
+    },
+    "tabs22title": {
+      "type": "string"
+    },
+    "tabs22heading": {
+      "type": "string"
+    },
+    "tabs22head": {
+      "type": "string"
+    },
+    "tabs22decription": {
+      "type": "text"
+    },
+    "about16title": {
+      "type": "string"
+    },
+    "about16heading": {
+      "type": "string"
+    },
+    "about16decription": {
+      "type": "text"
+    },
+    "aboutparagraph": {
+      "type": "component",
+      "repeatable": true,
+      "component": "solutions-we-offered.about-paragraph"
+    },
+    "brainsrashtasoftheading": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "title": {
+      "type": "string"
+    },
+    "paragraph": {
+      "type": "string"
+    },
+    "decription": {
+      "type": "text"
+    },
+    "lifeatrashtaofttitle": {
+      "type": "string"
+    },
+    "lifeimage": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "aboutimage16": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "aboutimage162": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "about22title": {
+      "type": "string"
+    },
+    "about22decription": {
+      "type": "text"
+    },
+    "about22heading": {
+      "type": "string"
+    },
+    "about22paragrapg": {
+      "type": "component",
+      "repeatable": true,
+      "component": "solutions-we-offered.about22paragrapg"
+    },
+    "about22image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "about22image2": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_need_help_sections_need_help_sections",
+  "info": {
+    "displayName": "Need Help Sections",
+    "icon": "baby",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "required": false
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Decription": {
+      "type": "string"
+    }
+  },
+  "category": "need-help-sections"
+}

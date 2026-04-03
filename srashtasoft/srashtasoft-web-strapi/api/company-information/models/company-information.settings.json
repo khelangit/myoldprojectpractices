@@ -1,0 +1,61 @@
+{
+  "kind": "singleType",
+  "collectionName": "company_informations",
+  "info": {
+    "name": "company-information",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "about": {
+      "type": "text",
+      "required": true
+    },
+    "address_india": {
+      "type": "string",
+      "required": true
+    },
+    "address_canada": {
+      "type": "string",
+      "required": true
+    },
+    "phone_india": {
+      "type": "string",
+      "required": true
+    },
+    "phone_canada": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "instagram_url": {
+      "type": "string",
+      "required": true
+    },
+    "facebook_url": {
+      "type": "string",
+      "required": true
+    },
+    "twitter_url": {
+      "type": "string",
+      "required": true
+    },
+    "linkedin_url": {
+      "type": "string",
+      "required": true
+    },
+    "office_hours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "asdededed.office-hours"
+    }
+  }
+}
